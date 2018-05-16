@@ -8,4 +8,4 @@ divi $s0, $t0, 0x2        // x=t0/2
 addi $s1, $s1, 0x1        // i++
 bne $s1, 10, loop_sqrt    // if i!=10, loop
 addi $v0, $zero, $s1      // v0=x
-ret                       //return
+jr $ra                       //return
