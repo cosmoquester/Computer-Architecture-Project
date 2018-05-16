@@ -1,23 +1,34 @@
 .data:
-	dot:	.word 0 0 0 0 2 6 8 4
-			.word 7 2 1 6 4 9 3 2
+	dot:	.word 0 0
+		.word 0 0
+		.word 2 6 
+		.word 8 4
+		.word 7 2
+		.word 1 6
+		.word 4 9
+		.word 3 2
 
 	arr:	.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
-			.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+		.float 0 0 0 0 0 0 0 0
+
 	dist:	.float 0
 	min:	.float 99999
 	r:		.word 1 0 0 0 0 0 7
 	save_root:	.word 0 0 0 0 0 0 0
 
 .text
+main:
+la $a0, arr
+la $a1, dot
+j getPathLengthData
 
-.loop1
+loop1:
 addi $t0, $zero, 0x2   //t0=a, a=2
 l.s $s0, dist          // s0=dist
 la $s1, r              // s1=r
