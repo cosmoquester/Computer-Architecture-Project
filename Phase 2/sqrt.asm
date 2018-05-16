@@ -1,7 +1,7 @@
-.sqrt:
+sqrt:
 addi $s0, $zero, 0x1     //s0=x=1, x=float
 add $s1, $zero, $zero    // s1=i=0
-.loop_sqrt:
+loop_sqrt:
 div.s $a0, $s0       // t0=input/x
 mflo $t0           
 add.s $t0, $t0, $a0       // t0= x+input/x

@@ -33,12 +33,18 @@ addi $t0, $zero, 0x2  // t0=d1=2, loop1 처음에서 d1-- 해줘서 2로 초기�
 
 loop1:
 addi $t0, $t0, 0x1    // d1++
-
+addi $t1, $t0, -0x7   // t1=d0-7
+bgez $t1, end         // t1>7, goto end
 add $t1, $t0, $s1     // t1=arr+d1
 l.s $s0, 0x0($t1)     // dist=arr[0][d1]
 sub.s $t1, $s3, $s0   // t1 = dist_min-dist
 bltz $t1, loop1       // if(t<0) goto loop1
+loop2:
 
+
+
+end:
+printf():
 for (int d1 = 1; d1 < 7; d1++)
         {
                 dist = arr[0][d1];
