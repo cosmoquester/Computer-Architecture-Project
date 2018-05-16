@@ -17,6 +17,17 @@
 
 .text
 
+.loop1
+addi $t0, $zero, 0x2   //t0=a, a=2
+l.s $s0, dist          // s0=dist
+la $s1, r              // s1=r
+add.s $s0, $zero, $zero //dist=0
+sw $t0, 0x4($s1)        // r[1]=a
+la $s2, arr				// s2=arr
+
+.loop2
+addi $t1, $zero, 0x2
+
 
 
 	for (int a = 2; a <= 6; a++){
