@@ -24,11 +24,20 @@ d2: int 1
 main:
 la $a0, arr
 la $a1, dot
-j getPathLengthData
+jal getPathLengthData
+la $s1, arr            // s1=arr
+la $s2, dot            // s2=dot
+l.s $s3, dist_min      // s3=dist_min
+la $s4, course         // s4=course
+addi $t0, $zero, 0x2  // t0=d1=2, loop1 처음에서 d1-- 해줘서 2로 초기화
 
 loop1:
-addi $t0, $zero, 0x1  //t0=d1
+addi $t0, $t0, 0x1    // d1++
 
+add $t1, $t0, $s1     // t1=arr+d1
+l.s $s0, 0x0($t1)     // dist=arr[0][d1]
+sub.s $t1, $s3, $s0   // t1 = dist_min-dist
+bltz $t1, loop1       // if(t<0) goto loop1
 
 for (int d1 = 1; d1 < 7; d1++)
         {
