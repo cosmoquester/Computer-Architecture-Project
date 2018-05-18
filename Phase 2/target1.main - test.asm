@@ -18,6 +18,7 @@ double_max: .double 999999.0
 .text
 main:
 l.d $f0, double_max
+
 # GetPathLenthData funciton excution
 
 # for loop1
@@ -26,8 +27,7 @@ loop1:
 addi $s1, $s1, 1
 bge $s1, 7, exit_loop
 sll $t0, $s1, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[0][d1]
+l.d $f2, arr($t0)                 # dist = arr[0][d1]
 mov.d $f4, $f2                # dist1 = dist
 c.le.d $f0, $f2 
 bc1t loop1                    # if (dist > dist_min)    continue;	
@@ -41,8 +41,7 @@ sll $t0, $s1, 3
 sub $t0, $t0, $s1
 add $t0, $t0, $s2
 sll $t0, $s2, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[d1][d2]
+l.d $f2, arr($t0)                 # dist = arr[d1][d2]
 add.d $f2, $f2, $f4           # dist = dist + dist1
 mov.d $f6, $f2                # dist2 = dist
 c.le.d $f0, $f2 
@@ -58,8 +57,7 @@ sll $t0, $s2, 3
 sub $t0, $t0, $s2
 add $t0, $t0, $s3
 sll $t0, $s3, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[d2][d3]
+l.d $f2, arr($t0)                 # dist = arr[d2][d3]
 add.d $f2, $f2, $f6           # dist = dist + dist2
 mov.d $f8, $f2                # dist3 = dist
 c.le.d $f0, $f2 
@@ -76,8 +74,7 @@ sll $t0, $s3, 3
 sub $t0, $t0, $s3
 add $t0, $t0, $s4
 sll $t0, $s4, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[d3][d4]
+l.d $f2, arr($t0)                 # dist = arr[d3][d4]
 add.d $f2, $f2, $f8           # dist = dist + dist3
 mov.d $f10, $f2               # dist4 = dist
 c.le.d $f0, $f2 
@@ -95,8 +92,7 @@ sll $t0, $s4, 3
 sub $t0, $t0, $s4
 add $t0, $t0, $s5
 sll $t0, $s5, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[d4][d5]
+l.d $f2, arr($t0)                 # dist = arr[d4][d5]
 add.d $f2, $f2, $f10          # dist = dist + dist4
 mov.d $f12, $f2               # dist5 = dist
 c.le.d $f0, $f2 
@@ -115,12 +111,10 @@ sll $t0, $s5, 3
 sub $t0, $t0, $s5
 add $t0, $t0, $s6
 sll $t0, $s6, 3
-la $t0, arr
-mtc1 $t0, $f2                 # dist = arr[d5][d6]
+l.d $f2, arr($t0)                 # dist = arr[d5][d6]
 add.d $f2, $f2, $f12          # dist = dist + dist4
 sll $t0, $s6, 3
-la $t0, arr
-mtc1 $t0, $f14                
+l.d $f14, arr($t0)       
 add.d $f2, $f2, $f14          # dist = dist + arr[d6][0]
 c.le.d $f0, $f2
 bc1t loop6                    # if (dist >= dist_min)    continue;
@@ -131,7 +125,7 @@ sw $s4, course+12
 sw $s5, course+16
 sw $s6, course+20
 mov.d $f0, $f2
-j loop1
+j loop6
 exit_loop:
 la $v0, 1
 la $a0, 1
