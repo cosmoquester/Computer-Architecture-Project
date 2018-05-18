@@ -164,6 +164,9 @@ syscall
 lw $a0, course+20
 addi $a0, 1
 syscall
+la $v0, 11
+la $a0, 10
+syscall
 la $v0, 3
 mov.d $f12, $f0
 syscall
