@@ -56,45 +56,55 @@ int main()
 	{
 		dist = arr[0][d1];
 		if (dist > dist_min)
-			continue;
+			continue;	
+		double dist1 = dist;
+
 		//depth2
 		for (int d2 = 1; d2 < 7; d2++)
 		{
 			if (d2 == d1)
 				continue;
-			dist = arr[0][d1] + arr[d1][d2];
+			dist = dist1 + arr[d1][d2];
 			if (dist > dist_min)
 				continue;
+			double dist2 = dist;
+
 			//depth3
 			for (int d3 = 1; d3 < 7; d3++)
 			{
 				if (d3 == d2 || d3 == d1)
 					continue;
-				dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3];
+				dist = dist2 + arr[d2][d3];
 				if (dist > dist_min)
 					continue;
+				double dist3 = dist;
+
 				//depth4
 				for (int d4 = 1; d4 < 7; d4++)
 				{
 					if (d4 == d3 || d4 == d2 || d4 == d1)
 						continue;
-					dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4];
+					dist = dist3 + arr[d3][d4];
 					if (dist > dist_min)
 						continue;
+					double dist4 = dist;
+
 					//depth5
 					for (int d5 = 1; d5 < 7; d5++)
 					{
 						if (d5 == d4 || d5 == d3 || d5 == d2 || d5 == d1)
 							continue;
-						dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4] + arr[d4][d5];
+						dist = dist4 + arr[d4][d5];
 						if (dist > dist_min)
 							continue;
+						double dist5 = dist;
+
 						//depth6
 						for (int d6 = 1; d6 < 7; d6++)
 						{
 							if (d6 == d5 || d6 == d4 || d6 == d3 || d6 == d2 || d6 == d1)
 								continue;
-							dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4] + arr[d4][d5] + arr[d5][d6] + arr[d6][0];
+							dist = dist5 + arr[d5][d6] + arr[d6][0];
 							if (dist < dist_min)
 							{
 								course[0] = d1;
