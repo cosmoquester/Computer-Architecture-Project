@@ -30,48 +30,25 @@ la $a1, dot
 jal getPathLengthData
 
 # for loop1
-li $s1, 1
+li $s1, 0
 loop1:
+addi $s1, $s1, 1
 bge $s1, 7, exit_loop
-l.d $f2, 
-
-
-
-
-
+sll $t0, $s1, 3
+add $t0, $t0, arr
+mtc1 $t0, $f2                 # dist = arr[0][d1]
+c.le.d $f0, $f2 
+bc1t loop1                    # if (dist > dist_min)    continue;	
+# for loop2
+li $s2, 0
+loop2:
+addi $s2, $s2, 1
+bge $s2, 7, loop1
+sll $t0, $s2, 3
+add $t0, $t0, arr
+mtc1 $t0, $f2                 # dist = arr[0][d1]
+c.le.d $f0, $f2 
+bc1t loop2                    # if (dist > dist_min)    continue;
 
 
 exit_loop:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
