@@ -40,7 +40,7 @@ bge $s2, 7, loop1
 sll $t0, $s1, 3
 sub $t0, $t0, $s1
 add $t0, $t0, $s2
-sll $t0, $s2, 3
+sll $t0, $t0, 3
 l.d $f2, arr($t0)                 # dist = arr[d1][d2]
 add.d $f2, $f2, $f4           # dist = dist + dist1
 mov.d $f6, $f2                # dist2 = dist
@@ -56,7 +56,7 @@ bge $s3, 7, loop2
 sll $t0, $s2, 3
 sub $t0, $t0, $s2
 add $t0, $t0, $s3
-sll $t0, $s3, 3
+sll $t0, $t0, 3
 l.d $f2, arr($t0)                 # dist = arr[d2][d3]
 add.d $f2, $f2, $f6           # dist = dist + dist2
 mov.d $f8, $f2                # dist3 = dist
@@ -73,7 +73,7 @@ bge $s4, 7, loop3
 sll $t0, $s3, 3
 sub $t0, $t0, $s3
 add $t0, $t0, $s4
-sll $t0, $s4, 3
+sll $t0, $t0, 3
 l.d $f2, arr($t0)                 # dist = arr[d3][d4]
 add.d $f2, $f2, $f8           # dist = dist + dist3
 mov.d $f10, $f2               # dist4 = dist
@@ -91,7 +91,7 @@ bge $s5, 7, loop4
 sll $t0, $s4, 3
 sub $t0, $t0, $s4
 add $t0, $t0, $s5
-sll $t0, $s5, 3
+sll $t0, $t0, 3
 l.d $f2, arr($t0)                 # dist = arr[d4][d5]
 add.d $f2, $f2, $f10          # dist = dist + dist4
 mov.d $f12, $f2               # dist5 = dist
@@ -110,7 +110,7 @@ bge $s6, 7, loop5
 sll $t0, $s5, 3
 sub $t0, $t0, $s5
 add $t0, $t0, $s6
-sll $t0, $s6, 3
+sll $t0, $t0, 3
 l.d $f2, arr($t0)                 # dist = arr[d5][d6]
 add.d $f2, $f2, $f12          # dist = dist + dist4
 sll $t0, $s6, 3
