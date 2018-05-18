@@ -15,6 +15,8 @@ dot: .word 0, 0
          .word 4, 9
          .word 3, 2    
 course: .word 0, 0, 0, 0, 0, 0
+double_max: .double 999999.0
+
 
 
 # d1 ~ d6 = s1 ~ s6
@@ -23,8 +25,7 @@ course: .word 0, 0, 0, 0, 0, 0
 
 .text
 main:
-l.d $f0, 99999
-l.d $f1, 0
+l.d $f0, double_max
 # GetPathLenthData funciton excution
 la $a0, arr
 la $a1, dot
@@ -36,7 +37,7 @@ loop1:
 addi $s1, $s1, 1
 bge $s1, 7, exit_loop
 sll $t0, $s1, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[0][d1]
 mov.d $f4, $f2                # dist1 = dist
 c.le.d $f0, $f2 
@@ -51,7 +52,7 @@ sll $t0, $s1, 3
 sub $t0, $t0, $s1
 add $t0, $t0, $s2
 sll $t0, $s2, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[d1][d2]
 add.d $f2, $f2, $f4           # dist = dist + dist1
 mov.d $f6, $f2                # dist2 = dist
@@ -68,7 +69,7 @@ sll $t0, $s2, 3
 sub $t0, $t0, $s2
 add $t0, $t0, $s3
 sll $t0, $s3, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[d2][d3]
 add.d $f2, $f2, $f6           # dist = dist + dist2
 mov.d $f8, $f2                # dist3 = dist
@@ -86,7 +87,7 @@ sll $t0, $s3, 3
 sub $t0, $t0, $s3
 add $t0, $t0, $s4
 sll $t0, $s4, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[d3][d4]
 add.d $f2, $f2, $f8           # dist = dist + dist3
 mov.d $f10, $f2               # dist4 = dist
@@ -105,7 +106,7 @@ sll $t0, $s4, 3
 sub $t0, $t0, $s4
 add $t0, $t0, $s5
 sll $t0, $s5, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[d4][d5]
 add.d $f2, $f2, $f10          # dist = dist + dist4
 mov.d $f12, $f2               # dist5 = dist
@@ -125,44 +126,44 @@ sll $t0, $s5, 3
 sub $t0, $t0, $s5
 add $t0, $t0, $s6
 sll $t0, $s6, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f2                 # dist = arr[d5][d6]
 add.d $f2, $f2, $f12          # dist = dist + dist4
 sll $t0, $s6, 3
-add $t0, $t0, arr
+la $t0, arr
 mtc1 $t0, $f14                
 add.d $f2, $f2, $f14          # dist = dist + arr[d6][0]
 c.le.d $f0, $f2
 bc1t loop6                    # if (dist >= dist_min)    continue;
-sw course, $s1
-sw course+4, $s2
-sw course+8, $s3
-sw course+12, $s4
-sw course+16, $s5
-sw course+20, $s6
+sw $s1, course
+sw $s2, course+4
+sw $s3, course+8
+sw $s4, course+12
+sw $s5, course+16
+sw $s6, course+20
 mov.s $f0, $f2
 exit_loop:
-lui $v0, 1
-lui $a0, 1
+la $v0, 1
+la $a0, 1
 syscall
 lw $a0, course
-addi $a0, 1
-syscall
-lw $a0, course+1
-addi $a0, 1
-syscall
-lw $a0, course+2
-addi $a0, 1
-syscall
-lw $a0, course+3
 addi $a0, 1
 syscall
 lw $a0, course+4
 addi $a0, 1
 syscall
-lw $a0, course+5
+lw $a0, course+8
 addi $a0, 1
 syscall
-lui $v0, 3
+lw $a0, course+12
+addi $a0, 1
+syscall
+lw $a0, course+16
+addi $a0, 1
+syscall
+lw $a0, course+20
+addi $a0, 1
+syscall
+la $v0, 3
 mov.d $f12, $f0
 syscall
