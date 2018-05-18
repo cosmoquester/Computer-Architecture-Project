@@ -159,3 +159,5 @@ syscall
 la $v0, 3
 mov.d $f12, $f0
 syscall
+la $v0, 10
+syscall
