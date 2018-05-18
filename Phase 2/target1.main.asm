@@ -141,7 +141,7 @@ sw $s3, course+8
 sw $s4, course+12
 sw $s5, course+16
 sw $s6, course+20
-mov.s $f0, $f2
+mov.d $f0, $f2
 j loop1
 exit_loop:
 la $v0, 1
