@@ -8,17 +8,17 @@
 		.word 4 9
 		.word 3 2
 
-	arr:	.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
-		.float 0 0 0 0 0 0 0 0
+	arr:	.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
+		.double 0 0 0 0 0 0 0 0
 
-	dist:	.float 0
-	min:	.float 99999
+	dist:	.double 0
+	min:	.double 99999
 	r:		.word 1 0 0 0 0 0 7
 	save_root:	.word 0 0 0 0 0 0 0
 
@@ -29,12 +29,12 @@ la $a1, dot
 j getPathLengthData
 
 loop1:
-addi $t0, $zero, 0x2   //t0=a, a=2
-l.s $s0, dist          // s0=dist
-la $s1, r              // s1=r
-add.s $s0, $zero, $zero //dist=0
-sw $t0, 0x4($s1)        // r[1]=a
-la $s2, arr				// s2=arr
+addi $t0, $zero, 0x2	#t0=a, a=2
+l.s $s0, dist			#s0=dist
+la $s1, r				#s1=r
+add.d $s0, $zero, $zero	#dist=0
+sw $t0, 0x4($s1)		#r[1]=a
+la $s2, arr				#s2=arr
 
 .loop2
 addi $t1, $zero, 0x2

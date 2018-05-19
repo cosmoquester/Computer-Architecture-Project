@@ -86,7 +86,7 @@ Loop2:
 
 	#-----arr[i][j] = sqrt의 결과값----
 	
-	addi	$t1, $zero, 28		# $t1 = 28
+	addi $t1, $zero, 28		# $t1 = 28
 	mul	$t2, $s0, $t1		# $t2 = i * 28
 	
 	sla	$t1, $s1, 2		# $t1 = j * 4
@@ -95,7 +95,7 @@ Loop2:
 
 	add	$s3, $t2, $t1		# $s3 = arr + (i * 28) + (j * 4)
 	
-	sw	$v0, 0($s3)		# arr[i][j] = sqrt의 결과 값
+	sw	$f12, 0($s3)		# arr[i][j] = sqrt의 결과 값
 
 	#-----for문-------------
 
