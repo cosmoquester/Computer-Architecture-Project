@@ -1,12 +1,12 @@
-﻿.data
+.data
 
-	데이터 셋
+	#데이터 셋
 
 .text
 
 
 main:
-	메인함수
+	#메인함수
 
 
 
@@ -122,8 +122,3 @@ Loop_End:
 	addi	$sp, $sp, 12
 
 	jr	$ra				# 원 함수로
-	
-	
-
-
-
