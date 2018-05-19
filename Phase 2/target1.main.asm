@@ -1,108 +1,171 @@
 .data
 
-arr: .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
-        .float 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+arr: .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        .double 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 dot: .word 0, 0
          .word 2, 6
          .word 8, 4
          .word 7, 2
          .word 1, 6
          .word 4, 9
-         .word 3, 2
-dist_min: .float 99999.0
-dist: .float 0.0
-course: .int 0, 0, 0, 0, 0, 0
-d1: int 1
-d2: int 1
+         .word 3, 2    
+course: .word 0, 0, 0, 0, 0, 0
+double_max: .double 999999.0
+
+
+
+# d1 ~ d6 = s1 ~ s6
+# f0 = dist_min, f2=dist
+# f4, f6, f8, f10, f12 = dist1 ~ dist5
 
 .text
 main:
+l.d $f0, double_max
+# GetPathLenthData funciton excution
 la $a0, arr
 la $a1, dot
 jal getPathLengthData
-la $s1, arr            // s1=arr
-la $s2, dot            // s2=dot
-l.s $s3, dist_min      // s3=dist_min
-la $s4, course         // s4=course
-addi $t0, $zero, 0x2  // t0=d1=2, loop1 처음에서 d1-- 해줘서 2로 초기화
 
+# for loop1
+li $s1, 0
 loop1:
-addi $t0, $t0, 0x1    // d1++
-addi $t1, $t0, -0x7   // t1=d0-7
-bgez $t1, end         // t1>7, goto end
-add $t1, $t0, $s1     // t1=arr+d1
-l.s $s0, 0x0($t1)     // dist=arr[0][d1]
-sub.s $t1, $s3, $s0   // t1 = dist_min-dist
-bltz $t1, loop1       // if(t<0) goto loop1
+addi $s1, $s1, 1
+bge $s1, 7, exit_loop
+sll $t0, $s1, 3
+l.d $f2, arr($t0)                 # dist = arr[0][d1]
+mov.d $f4, $f2                # dist1 = dist
+c.le.d $f0, $f2 
+bc1t loop1                    # if (dist > dist_min)    continue;	
+# for loop2
+li $s2, 0
 loop2:
-
-
-
-end:
-printf():
-for (int d1 = 1; d1 < 7; d1++)
-        {
-                dist = arr[0][d1];
-                if (dist > dist_min)
-                        continue;
-                //depth2
-                for (int d2 = 1; d2 < 7; d2++)
-                {
-                        if (d2 == d1)
-                                continue;
-                        dist = arr[0][d1] + arr[d1][d2];
-                        if (dist > dist_min)
-                                continue;
-                        //depth3
-                        for (int d3 = 1; d3 < 7; d3++)
-                        {
-                                if (d3 == d2 || d3 == d1)
-                                        continue;
-                                dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3];
-                                if (dist > dist_min)
-                                        continue;
-                                //depth4
-                                for (int d4 = 1; d4 < 7; d4++)
-                                {
-                                        if (d4 == d3 || d4 == d2 || d4 == d1)
-                                                continue;
-                                        dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4];
-                                        if (dist > dist_min)
-                                                continue;
-                                        //depth5
-                                        for (int d5 = 1; d5 < 7; d5++)
-                                        {
-                                                if (d5 == d4 || d5 == d3 || d5 == d2 || d5 == d1)
-                                                        continue;
-                                                dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4] + arr[d4][d5];
-                                                if (dist > dist_min)
-                                                        continue;
-                                                //depth6
-                                                for (int d6 = 1; d6 < 7; d6++)
-                                                {
-                                                        if (d6 == d5 || d6 == d4 || d6 == d3 || d6 == d2 || d6 == d1)
-                                                                continue;
-                                                        dist = arr[0][d1] + arr[d1][d2] + arr[d2][d3] + arr[d3][d4] + arr[d4][d5] + arr[d5][d6] + arr[d6][0];
-                                                        if (dist < dist_min)
-                                                        {
-                                                                course[0] = d1;
-                                                                course[1] = d2;
-                                                                course[2] = d3;
-                                                                course[3] = d4;
-                                                                course[4] = d5;
-                                                                course[5] = d6;
-                                                                dist_min = dist;
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                }
-        }
-        printf("1 %d %d %d %d %d %d 1\n%lf\n", course[0]+1, course[1]+1, course[2]+1, course[3]+1, course[4]+1, course[5]+1, dist_min);
-}
+addi $s2, $s2, 1
+beq $s2, $s1, loop2
+bge $s2, 7, loop1
+sll $t0, $s1, 3
+sub $t0, $t0, $s1
+add $t0, $t0, $s2
+sll $t0, $t0, 3
+l.d $f2, arr($t0)                 # dist = arr[d1][d2]
+add.d $f2, $f2, $f4           # dist = dist + dist1
+mov.d $f6, $f2                # dist2 = dist
+c.le.d $f0, $f2 
+bc1t loop2                    # if (dist > dist_min)    continue;
+# for loop3
+li $s3, 0
+loop3:
+addi $s3, $s3, 1
+beq $s3, $s1, loop3
+beq $s3, $s2, loop3
+bge $s3, 7, loop2
+sll $t0, $s2, 3
+sub $t0, $t0, $s2
+add $t0, $t0, $s3
+sll $t0, $t0, 3
+l.d $f2, arr($t0)                 # dist = arr[d2][d3]
+add.d $f2, $f2, $f6           # dist = dist + dist2
+mov.d $f8, $f2                # dist3 = dist
+c.le.d $f0, $f2 
+bc1t loop3                    # if (dist > dist_min)    continue;
+# for loop4
+li $s4, 0
+loop4:
+addi $s4, $s4, 1
+beq $s4, $s1, loop4
+beq $s4, $s2, loop4
+beq $s4, $s3, loop4
+bge $s4, 7, loop3
+sll $t0, $s3, 3
+sub $t0, $t0, $s3
+add $t0, $t0, $s4
+sll $t0, $t0, 3
+l.d $f2, arr($t0)                 # dist = arr[d3][d4]
+add.d $f2, $f2, $f8           # dist = dist + dist3
+mov.d $f10, $f2               # dist4 = dist
+c.le.d $f0, $f2 
+bc1t loop4                    # if (dist > dist_min)    continue;
+# for loop5
+li $s5, 0
+loop5:
+addi $s5, $s5, 1
+beq $s5, $s1, loop5
+beq $s5, $s2, loop5
+beq $s5, $s3, loop5
+beq $s5, $s4, loop5
+bge $s5, 7, loop4
+sll $t0, $s4, 3
+sub $t0, $t0, $s4
+add $t0, $t0, $s5
+sll $t0, $t0, 3
+l.d $f2, arr($t0)                 # dist = arr[d4][d5]
+add.d $f2, $f2, $f10          # dist = dist + dist4
+mov.d $f12, $f2               # dist5 = dist
+c.le.d $f0, $f2 
+bc1t loop5                    # if (dist > dist_min)    continue;
+# for loop6
+li $s6, 0
+loop6:
+addi $s6, $s6, 1
+beq $s6, $s1, loop6
+beq $s6, $s2, loop6
+beq $s6, $s3, loop6
+beq $s6, $s4, loop6
+beq $s6, $s5, loop6
+bge $s6, 7, loop5
+sll $t0, $s5, 3
+sub $t0, $t0, $s5
+add $t0, $t0, $s6
+sll $t0, $t0, 3
+l.d $f2, arr($t0)                 # dist = arr[d5][d6]
+add.d $f2, $f2, $f12          # dist = dist + dist4
+sll $t0, $s6, 3
+l.d $f14, arr($t0)       
+add.d $f2, $f2, $f14          # dist = dist + arr[d6][0]
+c.le.d $f0, $f2
+bc1t loop6                    # if (dist >= dist_min)    continue;
+sw $s1, course
+sw $s2, course+4
+sw $s3, course+8
+sw $s4, course+12
+sw $s5, course+16
+sw $s6, course+20
+mov.d $f0, $f2
+j loop6
+exit_loop:
+la $v0, 1
+la $a0, 1
+syscall
+lw $a0, course
+addi $a0, 1
+syscall
+lw $a0, course+4
+addi $a0, 1
+syscall
+lw $a0, course+8
+addi $a0, 1
+syscall
+lw $a0, course+12
+addi $a0, 1
+syscall
+lw $a0, course+16
+addi $a0, 1
+syscall
+lw $a0, course+20
+addi $a0, 1
+syscall
+la $v0, 1
+la $a0, 1
+syscall
+la $v0, 11
+la $a0, 10
+syscall
+la $v0, 3
+mov.d $f12, $f0
+syscall
+la $v0, 10
+syscall
