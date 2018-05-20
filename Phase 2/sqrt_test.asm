@@ -5,21 +5,24 @@
     test:   .double 4.0
 .text
 
-#레지스터 표-----
-#   $a0 함수 인자
-#   $s1 = i 반복문 카운터
+#register tale---------------
+#   $a0 paramater
+#   $s1 = i , loop counter
 #   $f2 = x
-#   $f4 = tmp 임시변수
-#   $f6 = 2(상수의 더블 형)
+#   $f4 = tmp
+#   $f6 = 2(double type of 2)
 #   $f12 = input
 #----------------------------
 
 main:
+addi $a0, $zero, 0x4
 jal sqrt
 addi $v0,$zero,0x3
 syscall
 
 sqrt:
+mtc1 $a0, $f12
+cvt.d.w $f12, $f12
 l.d $f12,test
 l.d $f2, x
 add $s1, $zero, $zero   #s1=i=0
@@ -33,4 +36,6 @@ addi $s1, $s1, 0x1      #i++
 bne $s1, 10, loop_sqrt  #if i!=10, loop
 
 #add.d $f12, $f8, 0.0
+s.d $f2, x
+l.d $f12, x
 jr $ra                  #return

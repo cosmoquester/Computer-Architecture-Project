@@ -3,13 +3,15 @@
     x:      .double 1.0
     two:    .double 2.0
 .text
-#레지스터 표-----
-#   $a0 함수 인자
-#   $s1 = i 반복문 카운터
+#register tale---------------
+#   $a0 paramater
+#   $s1 = i , loop counter
 #   $f2 = x
-#   $f4 = tmp 임시변수
-#   $f6 = 2(상수의 더블 형)
+#   $f4 = tmp
+#   $f6 = 2(double type of 2)
+#   $f12 = input, and output
 #----------------------------
+
 sqrt:
 mtc1 $a0, $f12
 cvt.d.w $f12, $f12
