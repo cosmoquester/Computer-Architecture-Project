@@ -27,6 +27,5 @@ addi $s1, $s1, 0x1      #i++
 bne $s1, 10, loop_sqrt  #if i!=10, loop
 
 #add.d $f12, $f8, 0.0
-s.d $f2, x
-l.d $f12, x
+mov.d $f12, $f2
 jr $ra                  #return
