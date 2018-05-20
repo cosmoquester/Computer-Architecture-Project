@@ -33,6 +33,21 @@ la $a0, arr
 la $a1, dot
 jal getPathLengthData
 
+# --- This codes for test path lenth
+la $t0, 0
+li $v0, 3
+li $a0, 10
+test_loop:
+l.d $f12, arr($t0)
+syscall
+li $v0, 11
+syscall
+addi $t0, $t0, 8
+ble $t0, 384, test_loop
+
+
+
+
 # for loop1
 li $s1, 0
 loop1:
