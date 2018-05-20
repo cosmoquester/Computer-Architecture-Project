@@ -172,13 +172,14 @@ syscall
 la $v0, 10
 syscall
 
+
 getPathLengthData:
 	addi	$sp, $sp, -12
 	sw	$ra, 0($sp)			
 	sw	$a0, 4($sp)			
-	sw	$a1, 8($sp)			
+	sw	$a1, 8($sp)		
 
-	li	$s0, 0			
+	li	$s0, 0				
 	li	$t0, 7				
 
 
@@ -221,7 +222,14 @@ Loop2:
 	sw	$a0, 0($sp)			
 
 	add	$a0, $zero, $t1			
+
+	addi	$sp, $sp, -4
+	sw	$s1, 0($sp)			# store $s1
+
 	jal	sqrt				# call sqrt(temp)
+
+	lw	$s1, 0($sp)
+	addi	$sp, $sp, 4			# restore $s1
 
 	lw	$a0, 0($sp)			
 	addi	$sp, $sp, 4		
@@ -232,7 +240,7 @@ Loop2:
 	
 	sll	$t1, $s1, 3			# $t1 = j * 8
 
-	la	$s3, 0($a0)			
+	la	$s3, 0($a0)		
 
 	add	$t3, $t2, $t1			# $t3 = (i * 8 * 7) + (j * 8)
 	add	$s3, $s3, $t3			# $s3 = arr + (i * 8 * 7) + (j * 8)
@@ -250,9 +258,9 @@ Loop_End:
 	addi	$s0, $s0, 1			# i++
 	bne	$s0, $t0, Loop1			
 
-	lw	$ra, 0($sp)		
+	lw	$ra, 0($sp)			
 	lw	$a0, 4($sp)		
-	lw	$a1, 8($sp)		
+	lw	$a1, 8($sp)			
 	addi	$sp, $sp, 12
 
 	jr	$ra				
