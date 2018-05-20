@@ -1,4 +1,4 @@
-.data
+﻿.data
 
 	#데이터 셋
 
@@ -101,7 +101,8 @@ Loop2:
 
 	la	$s3, 0($a0)			# $s3 = $a0의 주소(arr의 주소)
 
-	add	$s3, $t2, $t1			# $s3 = arr + (i * 8 * 7) + (j * 8)
+	add	$t3, $t2, $t1			# $t3 = (i * 8 * 7) + (j * 8)
+	add	$s3, $s3, $t3			# $s3 = arr + (i * 8 * 7) + (j * 8)
 	
 	sw.d	$f0, 0($s3)			# arr[i][j] = sqrt의 결과 값
 
@@ -109,7 +110,7 @@ Loop2:
 
 
 	addi	$s1, $s1, 1			# j++
-	beq	$s1, $t0, Loop1			# j가 7되면 Loop1로~
+	beq	$s1, $t0, Loop_End		# j가 7되면 Loop_End로
 	j	Loop2
 
 Loop_End:
