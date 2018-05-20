@@ -88,7 +88,14 @@ Loop2:
 	sw	$a0, 0($sp)			# 스택에 $a0주소 저장(arr 주소)
 
 	add	$a0, $zero, $t1			# 함수 인자로 $t1(temp)
+
+	addi	$sp, $sp, -4
+	sw	$s1, 0($sp)			# store $s1
+
 	jal	sqrt				# call sqrt(temp)
+
+	lw	$s1, 0($sp)
+	addi	$sp, $sp, 4			# restore $s1
 
 	lw	$a0, 0($sp)			# $a0에 다시 arr 주소 불러옴
 	addi	$sp, $sp, 4		
