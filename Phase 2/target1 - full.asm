@@ -33,21 +33,6 @@ la $a0, arr
 la $a1, dot
 jal getPathLengthData
 
-# --- This codes for test path lenth
-la $t0, 0
-li $a0, 10
-test_loop:
-li $v0, 3
-l.d $f12, arr($t0)
-syscall
-li $v0, 11
-syscall
-addi $t0, $t0, 8
-ble $t0, 384, test_loop
-
-
-
-
 # for loop1
 li $s1, 0
 loop1:
@@ -145,35 +130,37 @@ l.d $f14, arr($t0)
 add.d $f2, $f2, $f14          # dist = dist + arr[d6][0]
 c.le.d $f0, $f2
 bc1t loop6                    # if (dist >= dist_min)    continue;
-sw $s1, course
-sw $s2, course+4
-sw $s3, course+8
-sw $s4, course+12
-sw $s5, course+16
-sw $s6, course+20
+la $t0, course
+sw $s1, 0($t0)
+sw $s2, 4($t0)
+sw $s3, 12($t0)
+sw $s4, 16($t0)
+sw $s5, 20($t0)
+sw $s6, 24($t0)
 mov.d $f0, $f2
 j loop6
 exit_loop:
 la $v0, 1
 la $a0, 1
 syscall
-lw $a0, course
-addi $a0, 1
+la $t0, course
+lw $a0, 0($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+4
-addi $a0, 1
+lw $a0, 4($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+8
-addi $a0, 1
+lw $a0, 8($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+12
-addi $a0, 1
+lw $a0, 12($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+16
-addi $a0, 1
+lw $a0, 16($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+20
-addi $a0, 1
+lw $a0, 20($t0)
+addi $a0, $a0, 1
 syscall
 la $v0, 1
 la $a0, 1
@@ -197,14 +184,10 @@ getPathLengthData:
 	li	$s0, 0				
 	li	$t0, 7				
 
-
 Loop1:
 	li	$s1, 0				
 	
-	
 Loop2:
-
-
 	la	$s3, 0($a1)			
 
 	sll	$s2, $s0, 3			# $s2 = i * 8
@@ -212,8 +195,6 @@ Loop2:
 
 	lw	$t1, 0($s3)			# $t1 = dot[i][0]
 	lw	$t2, 4($s3)			# $t2 = dot[i][1]
-
-
 
 	la	$s3, 0($a1)			
 
@@ -223,7 +204,6 @@ Loop2:
 	lw	$t3, 0($s3)			# $t3 = dot[j][0]
 	lw	$t4, 4($s3)			# $t4 = dot[j][1]
 
-
 	sub	$t3, $t3, $t1			# x_length = dot[j][0] - dot[i][0] (x2 - x1)
 	sub	$t4, $t4, $t2			# y_length = dot[j][1] - dot[i][1] (y2 - y1)
 
@@ -231,7 +211,6 @@ Loop2:
 	mul	$t2, $t4, $t4			# $t2 = y_length * y_length
 
 	add	$t1, $t1, $t2			# $t1 = $t1 + $t2   ($t1 = temp)
-
 
 	addi	$sp, $sp, -4
 	sw	$a0, 0($sp)			
@@ -248,7 +227,6 @@ Loop2:
 
 	lw	$a0, 0($sp)			
 	addi	$sp, $sp, 4		
-
 	
 	li	$t1, 56				# $t1 = 8 * 7
 	mul	$t2, $s0, $t1			# $t2 = i * 8 * 7
@@ -260,9 +238,7 @@ Loop2:
 	add	$t3, $t2, $t1			# $t3 = (i * 8 * 7) + (j * 8)
 	add	$s3, $s3, $t3			# $s3 = arr + (i * 8 * 7) + (j * 8)
 	
-	s.d	$f0, 0($s3)		
-
-
+	s.d	$f12, 0($s3)		
 
 	addi	$s1, $s1, 1			# j++
 	beq	$s1, $t0, Loop_End		
@@ -279,7 +255,6 @@ Loop_End:
 	addi	$sp, $sp, 12
 
 	jr	$ra				
-
 
 sqrt:
 mtc1 $a0, $f12
