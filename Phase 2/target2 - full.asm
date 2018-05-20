@@ -37,18 +37,6 @@ la $a0, arr
 la $a1, dot
 jal getPathLengthData
 
-# --- This codes for test path lenth
-la $t0, 0
-li $a0, 10
-test_loop:
-li $v0, 3
-l.d $f12, arr($t0)
-syscall
-li $v0, 11
-syscall
-addi $t0, $t0, 8
-ble $t0, 384, test_loop
-#-------------------------------------
 
 li $s0, 0         	  # s0<=dist  (value of 0)
 l.d $f0, double_max
@@ -149,22 +137,22 @@ j loop5
 
 exit_loop:
 la $v0, 1
-la $a0, 1
+li $a0, 1
 syscall
 lw $a0, r
-li $a0, 1
+addi $a0, $a0, 1
 syscall
 lw $a0, r+4
-li $a0, 1
+addi $a0, $a0, 1
 syscall
 lw $a0, r+8
-li $a0, 1
+addi $a0, $a0, 1
 syscall
 lw $a0, r+12
-li $a0, 1
+addi $a0, $a0, 1
 syscall
 lw $a0, r+16
-li $a0, 1
+addi $a0, $a0, 1
 syscall
 la $v0, 1
 la $a0, 7
