@@ -48,13 +48,14 @@ getPathLengthData:
 Loop1:
 	li	$s1, 0				# j = 0 초기화
 	
+	
 Loop2:
 
 	#-----i 계산------------
 
 	la	$s3, 0($a1)			# $s3 = $a1의 주소(dot의 주소)
 
-	sla	$s2, $s0, 3			# $s2 = i * 8
+	sll	$s2, $s0, 3			# $s2 = i * 8
 	add	$s3, $s3, $s2			# $s3 = $s3 + (i * 8)
 
 	lw	$t1, 0($s3)			# $t1 = dot[i][0]
@@ -65,7 +66,7 @@ Loop2:
 
 	la	$s3, 0($a1)			# $s3 = $a1의 주소(dot의 주소)
 
-	sla	$s2, $s1, 3			# $s2 = j * 8
+	sll	$s2, $s1, 3			# $s2 = j * 8
 	add	$s3, $s3, $s2			# $s3 = $s3 + (j * 8)
 
 	lw	$t3, 0($s3)			# $t3 = dot[j][0]
@@ -97,14 +98,14 @@ Loop2:
 	li	$t1, 56				# $t1 = 8 * 7
 	mul	$t2, $s0, $t1			# $t2 = i * 8 * 7
 	
-	sla	$t1, $s1, 3			# $t1 = j * 8
+	sll	$t1, $s1, 3			# $t1 = j * 8
 
 	la	$s3, 0($a0)			# $s3 = $a0의 주소(arr의 주소)
 
 	add	$t3, $t2, $t1			# $t3 = (i * 8 * 7) + (j * 8)
 	add	$s3, $s3, $t3			# $s3 = arr + (i * 8 * 7) + (j * 8)
 	
-	sw.d	$f0, 0($s3)			# arr[i][j] = sqrt의 결과 값
+	s.d	$f0, 0($s3)			# arr[i][j] = sqrt의 결과 값
 
 	#-----for문-------------
 
@@ -114,6 +115,7 @@ Loop2:
 	j	Loop2
 
 Loop_End:
+
 	addi	$s0, $s0, 1			# i++
 	bne	$s0, $t0, Loop1			# i가 7되면 for문 끝
 
