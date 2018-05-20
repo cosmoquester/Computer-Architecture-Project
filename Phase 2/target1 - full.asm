@@ -35,9 +35,9 @@ jal getPathLengthData
 
 # --- This codes for test path lenth
 la $t0, 0
-li $v0, 3
 li $a0, 10
 test_loop:
+li $v0, 3
 l.d $f12, arr($t0)
 syscall
 li $v0, 11
