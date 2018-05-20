@@ -121,10 +121,10 @@ bc1t loop6                    # if (dist >= dist_min)    continue;
 la $t0, course
 sw $s1, 0($t0)
 sw $s2, 4($t0)
-sw $s3, 12($t0)
-sw $s4, 16($t0)
-sw $s5, 20($t0)
-sw $s6, 24($t0)
+sw $s3, 8($t0)
+sw $s4, 12($t0)
+sw $s5, 16($t0)
+sw $s6, 20($t0)
 mov.d $f0, $f2
 j loop6
 exit_loop:
