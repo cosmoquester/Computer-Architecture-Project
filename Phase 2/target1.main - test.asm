@@ -118,35 +118,37 @@ l.d $f14, arr($t0)
 add.d $f2, $f2, $f14          # dist = dist + arr[d6][0]
 c.le.d $f0, $f2
 bc1t loop6                    # if (dist >= dist_min)    continue;
-sw $s1, course
-sw $s2, course+4
-sw $s3, course+8
-sw $s4, course+12
-sw $s5, course+16
-sw $s6, course+20
+la $t0, course
+sw $s1, 0($t0)
+sw $s2, 4($t0)
+sw $s3, 8($t0)
+sw $s4, 12($t0)
+sw $s5, 16($t0)
+sw $s6, 20($t0)
 mov.d $f0, $f2
 j loop6
 exit_loop:
 la $v0, 1
 la $a0, 1
 syscall
-lw $a0, course
-addi $a0, 1
+la $t0, course
+lw $a0, 0($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+4
-addi $a0, 1
+lw $a0, 4($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+8
-addi $a0, 1
+lw $a0, 8($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+12
-addi $a0, 1
+lw $a0, 12($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+16
-addi $a0, 1
+lw $a0, 16($t0)
+addi $a0, $a0, 1
 syscall
-lw $a0, course+20
-addi $a0, 1
+lw $a0, 20($t0)
+addi $a0, $a0, 1
 syscall
 la $v0, 1
 la $a0, 1

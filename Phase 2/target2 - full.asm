@@ -152,19 +152,19 @@ la $v0, 1
 la $a0, 1
 syscall
 lw $a0, r
-addi $a0, 1
+li $a0, 1
 syscall
 lw $a0, r+4
-addi $a0, 1
+li $a0, 1
 syscall
 lw $a0, r+8
-addi $a0, 1
+li $a0, 1
 syscall
 lw $a0, r+12
-addi $a0, 1
+li $a0, 1
 syscall
 lw $a0, r+16
-addi $a0, 1
+li $a0, 1
 syscall
 la $v0, 1
 la $a0, 7
